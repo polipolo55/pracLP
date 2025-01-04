@@ -29,7 +29,9 @@
 
 "prova de la llista"
 
-(define llista '(12 2 3 4 5))
+(define llista '(1 2 3 4 5))
+
+(define llista2 '(12 10 3))
 
 (car llista) ; Resultat: 1
 
@@ -39,5 +41,13 @@
 
 (null? '()) ; Resultat: #t
 (null? llista) ; Resultat: #f
+
+"prova recursivitat"
+
+(define (suma-llista llista)
+  (if (null? llista)
+      0
+      (+ (car llista) (suma-llista (cdr llista)))))
+(suma-llista llista2) ; Resultat: 15
 
 "prova del let"

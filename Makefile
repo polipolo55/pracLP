@@ -1,22 +1,38 @@
-# Compiler options
+# Opcions del compilador
 ANTLR = antlr4
 ANTLR_FLAGS = -Dlanguage=Python3 -no-listener -visitor
 GRAMMAR_FILE = Scheme.g4
 
-# Output files
+# Fitxers de sortida
 LEXER = SchemeLexer.py
 PARSER = SchemeParser.py
 VISITOR = SchemeVisitor.py
 
-# Target to generate the parser, lexer, and visitor classes
+# Fitxer Scheme per defecte a executar
+DEFAULT_SCHEME_FILE = test.scm
+
+# Objectiu per generar les classes del parser, lexer i visitor
 all: 
 	$(ANTLR) $(ANTLR_FLAGS) $(GRAMMAR_FILE)
 
-# Clean generated files
+# Netejar fitxers generats
 clean:
+	rm -f $(LEXER) $(PARSER) $(VISITOR)
+	rm -f *.tokens *.interp
 
-# Target to run your Python script (e.g., your evaluation logic)
+# Objectiu per executar el teu script Python amb un fitxer Scheme especificat
+# Ús: make run SCHEME_FILE=el_teu_fitxer.scm
 run: all
-	python3 Scheme.py
+ifndef SCHEME_FILE
+	$(MAKE) run SCHEME_FILE=$(DEFAULT_SCHEME_FILE)
+else
+	python3 Scheme.py $(SCHEME_FILE)
+endif
 
-# antlr4 -visitor -no-visitor -Dlanguage=Python3 Scheme.g4
+# Opcional: Objectiu d'ajuda per mostrar instruccions d'ús
+help:
+	@echo "Ús del Makefile:"
+	@echo "  make all                 - Genera les classes del lexer, parser i visitor"
+	@echo "  make clean               - Elimina els fitxers generats del lexer, parser i visitor"
+	@echo "  make run SCHEME_FILE=... - Executa Scheme.py amb el fitxer Scheme especificat"
+	@echo "     Si SCHEME_FILE no està especificat, s'utilitza $(DEFAULT_SCHEME_FILE) per defecte."
