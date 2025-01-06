@@ -2,6 +2,9 @@ from SchemeVisitor import SchemeVisitor
 
 class EvalVisitor(SchemeVisitor):
     def __init__(self):
+
+        self.debug = False
+
         self.environment = {
             '#t': True,
             '#f': False
@@ -94,9 +97,12 @@ class EvalVisitor(SchemeVisitor):
         for param, expr in zip(params, expressions):
             temp_env[param] = self.visit(expr)
 
+
         original_env = self.environment
         self.environment = temp_env
-        res = self.visit(cos)
+        res = None
+        for f in cos:
+            res = self.visit(f)
         self.environment = original_env
         return res
 
@@ -139,23 +145,26 @@ class EvalVisitor(SchemeVisitor):
         return None
     
 
-    def handle_let_clause(self, bindings, expression):
+    def handle_let_clause(self, bindings, expressions):
         if not isinstance(bindings, list):
             raise Exception("Let requereix una llista de definicions")
         local_env = self.environment.copy()
 
         for name, value in bindings:
+            print(f"Definint LET {name} amb valor {value}")
             local_env[name] = value
 
 
         original_env = self.environment
         self.environment = local_env
-        result = self.visit(expression)
+        for expression in expressions:
+            result = self.visit(expression)
         self.environment = original_env
 
         return result
 
     def handle_read(self):
+        print("Toca llegir un valor")
         input_text = input()
         try:
             return int(input_text)
@@ -167,7 +176,9 @@ class EvalVisitor(SchemeVisitor):
         children = list(ctx.getChildren())
         _, operador, *expressions, _ = children
         operador_text = operador.getText()
-        print("call amb operador", operador_text)
+
+        if (self.debug): print("call amb operador", operador_text)
+
         if operador_text == 'define':
             if len(expressions) < 1:
                 raise Exception("Definicio no valida")
@@ -175,7 +186,7 @@ class EvalVisitor(SchemeVisitor):
             if len(first_expr) == 1:
                 return self.define_variable(expressions[0], expressions[1])
             else:
-                return self.define_function(expressions[0], expressions[1])
+                return self.define_function(expressions[0], expressions[1:])
         
         elif operador_text == 'display':
             if len(expressions) != 1:
@@ -189,13 +200,11 @@ class EvalVisitor(SchemeVisitor):
             return None
         
         elif operador_text == 'read':
-            print("---------------------------------------------------------")
+            if len(expressions) != 0:
+                raise Exception("Read no requereix arguments")
             return self.handle_read()
 
-        elif operador_text == 'let':
-            if len(expressions) != 2:
-                raise Exception("Let requereix al menys una definicio i un cos")
-            
+        elif operador_text == 'let':              
             _, *bindings_exprs, _ = list(expressions[0].getChildren())
             if not isinstance(bindings_exprs, list):
                 raise Exception("Let requereix una llista de definicions")
@@ -203,9 +212,8 @@ class EvalVisitor(SchemeVisitor):
             for binding_ctx in bindings_exprs:
                 _, var, value, _ = list(binding_ctx.getChildren())
                 bindings.append((var.getText(), self.visit(value)))
-
-            expression = expressions[1]
-            return self.handle_let_clause(bindings, expression)
+            expressions = expressions[1:]
+            return self.handle_let_clause(bindings, expressions)
 
         ## Llistes
 
