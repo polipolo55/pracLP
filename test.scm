@@ -87,3 +87,8 @@
     (newline)))
 
 (sumar-dos-valors)
+
+
+(display (and (> 3 2) (< 5 10)) ) ; Resultat: #t
+(display (or (> 3 2) (< 1 0))   ) ; Resultat: #t
+(display (not (> 3 2))          ) ; Resultat: #f

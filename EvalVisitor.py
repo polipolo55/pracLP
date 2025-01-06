@@ -164,7 +164,6 @@ class EvalVisitor(SchemeVisitor):
         return result
 
     def handle_read(self):
-        print("Toca llegir un valor")
         input_text = input()
         try:
             return int(input_text)
@@ -270,6 +269,13 @@ class EvalVisitor(SchemeVisitor):
         
         elif hasattr(operador, 'arithmeticOperation') or hasattr(operador, 'booleanOperation'):
             return self.handle_operation(operador, expressions)
-        
+        elif operador_text == 'and':
+            return all(self.visit(expr) for expr in expressions)
+        elif operador_text == 'or':
+            return any(self.visit(expr) for expr in expressions)
+        elif operador_text == 'not':
+            if len(expressions) != 1:
+                raise Exception("Not requereix exactament un argument")
+            return not self.visit(expressions[0])
         else:
             return self.call_function(operador_text, expressions)
