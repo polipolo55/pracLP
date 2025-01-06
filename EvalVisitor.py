@@ -156,16 +156,18 @@ class EvalVisitor(SchemeVisitor):
         return result
 
     def handle_read(self):
-        text = input()
-        self.visit(text)
-        return
+        input_text = input()
+        try:
+            return int(input_text)
+        except ValueError:
+            return input_text
 
 
     def visitCalls(self, ctx):
         children = list(ctx.getChildren())
         _, operador, *expressions, _ = children
         operador_text = operador.getText()
-
+        print("call amb operador", operador_text)
         if operador_text == 'define':
             if len(expressions) < 1:
                 raise Exception("Definicio no valida")
@@ -175,7 +177,6 @@ class EvalVisitor(SchemeVisitor):
             else:
                 return self.define_function(expressions[0], expressions[1])
         
-
         elif operador_text == 'display':
             if len(expressions) != 1:
                 raise Exception("Display requereix exactament un argument")
@@ -183,13 +184,13 @@ class EvalVisitor(SchemeVisitor):
             print(result)
             return result
 
-        elif operador == 'newline':
+        elif operador_text == 'newline':
             print()
-            return
+            return None
         
-        elif operador == 'read':
-            handle_read(self)
-            return 
+        elif operador_text == 'read':
+            print("---------------------------------------------------------")
+            return self.handle_read()
 
         elif operador_text == 'let':
             if len(expressions) != 2:
