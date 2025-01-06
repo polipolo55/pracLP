@@ -1,53 +1,83 @@
-"hola"
-(+ 2 3)
-(> 5 3)
+(display "hola")
+(display (+ 2 3))
+(display (> 5 3))
 
 
+
+(display "prova definicio de funció")
 (define (suma x y) 
     (+ x y))
 
-(suma 3 4)
+(display (suma 3 4))
 
 
+(display "prova deifinició de funció sense paràmetres")
+(define (saluda)
+    (display "Hola")
+    (newline))
+
+(saluda)
+
+(display "prova de la definició de variables")
 (define cinc 5)
 
-(suma cinc 3)
+(display (suma cinc 3))
 
+(display "prova del if")
 
-"prova del if"
+(display 
+  (if (< 3 2)
+      "tres es menor que dos"
+      "tres no es menor que dos"))
 
-(if (< 3 2)
-    "tres es menor que dos"
-    "tres no es menor que dos")
+(display "prova del cond")
 
-"prova del cond"
+(display 
+  (cond
+    ((> 3 5) "major")
+    ((< 3 5) "menor")
+    (#t "igual")))
 
-(cond
-  ((> 3 5) "major")
-  ((< 3 5) "menor")
-  (#t "igual"))
-
-"prova de la llista"
+(display "prova de la llista")
 
 (define llista '(1 2 3 4 5))
 
 (define llista2 '(12 10 3))
 
-(car llista) ; Resultat: 1
+(display llista)
 
-(cdr llista) ; Resultat: (2 3 4 5)
+(display llista2)
 
-(cons 0 llista) ; Resultat: (0 1 2 3 4 5)
+(display (car llista)) ; Resultat: 1
 
-(null? '()) ; Resultat: #t
-(null? llista) ; Resultat: #f
+(display (cdr llista)) ; Resultat: (2 3 4 5)
 
-"prova recursivitat"
+(display (cons 0 llista)) ; Resultat: (0 1 2 3 4 5)
+
+(display (null? '())) ; Resultat: #t
+(display (null? llista)) ; Resultat: #f
+
+(display "prova recursivitat")
 
 (define (suma-llista llista)
   (if (null? llista)
       0
       (+ (car llista) (suma-llista (cdr llista)))))
-(suma-llista llista2) ; Resultat: 15
+(display (suma-llista llista2)) ; Resultat: 25
 
-"prova del let"
+(display "prova del let")
+
+(display 
+  (let ((x 10)
+        (y 20))
+    (+ x y)))
+
+
+(display "prova del let amb funció")
+(define (sumar-dos-valors)
+(display "Introdueix dos valors: ")
+(let ((val1 (read))
+    (val2 (read)))
+  (display "La suma és: ")
+  (display (+ val1 val2))
+  (newline)))

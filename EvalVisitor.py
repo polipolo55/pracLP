@@ -62,7 +62,7 @@ class EvalVisitor(SchemeVisitor):
     def define_function(self, func_node, body_node):
         func_parts = list(func_node.getChildren())
         if len(func_parts) < 2:
-            raise Exception("Definicio de funcio no valida")
+            raise Exception("Definicio de funcio no valida: parametres")
 
         _, nom, *params, _ = func_parts
         self.environment[nom.getText()] = ([param.getText() for param in params], body_node)
@@ -130,33 +130,81 @@ class EvalVisitor(SchemeVisitor):
     def handle_cond_clause(self, clauses):
         for clause in clauses:
             children = list(clause.getChildren())
-            #print(f"Processing clause: {clause.getText()}")
             if len(children) >= 2:
                 condition = children[1]
                 expressions = children[2:]
                 condition_result = self.visit(condition)
-                #print(f"Condition: {condition.getText()}, Result: {condition_result}")
                 if condition_result:
-                    print(f"Condition {condition.getText()} is true")
                     return self.visit(expressions[0])
         return None
+    
+
+    def handle_let_clause(self, bindings, expression):
+        if not isinstance(bindings, list):
+            raise Exception("Let requereix una llista de definicions")
+        local_env = self.environment.copy()
+
+        for name, value in bindings:
+            local_env[name] = value
+
+
+        original_env = self.environment
+        self.environment = local_env
+        result = self.visit(expression)
+        self.environment = original_env
+
+        return result
+
+    def handle_read(self):
+        text = input()
+        self.visit(text)
+        return
+
 
     def visitCalls(self, ctx):
         children = list(ctx.getChildren())
         _, operador, *expressions, _ = children
-        print("operador: " + operador.getText())
-
         operador_text = operador.getText()
 
         if operador_text == 'define':
-            if len(expressions) != 2:
+            if len(expressions) < 1:
                 raise Exception("Definicio no valida")
             first_expr = list(expressions[0].getChildren())
             if len(first_expr) == 1:
                 return self.define_variable(expressions[0], expressions[1])
             else:
                 return self.define_function(expressions[0], expressions[1])
+        
+
+        elif operador_text == 'display':
+            if len(expressions) != 1:
+                raise Exception("Display requereix exactament un argument")
+            result = self.visit(expressions[0])
+            print(result)
+            return result
+
+        elif operador == 'newline':
+            print()
+            return
+        
+        elif operador == 'read':
+            handle_read(self)
+            return 
+
+        elif operador_text == 'let':
+            if len(expressions) != 2:
+                raise Exception("Let requereix al menys una definicio i un cos")
             
+            _, *bindings_exprs, _ = list(expressions[0].getChildren())
+            if not isinstance(bindings_exprs, list):
+                raise Exception("Let requereix una llista de definicions")
+            bindings = [] 
+            for binding_ctx in bindings_exprs:
+                _, var, value, _ = list(binding_ctx.getChildren())
+                bindings.append((var.getText(), self.visit(value)))
+
+            expression = expressions[1]
+            return self.handle_let_clause(bindings, expression)
 
         ## Llistes
 
@@ -206,7 +254,7 @@ class EvalVisitor(SchemeVisitor):
             return self.handle_if_clause(expressions[0], expressions[1], expressions[2])
 
         elif operador_text == 'cond':
-            print("cond detectat")
+    
             return self.handle_cond_clause(expressions)
         
         ## Operacions
