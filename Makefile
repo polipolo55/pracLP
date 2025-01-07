@@ -28,9 +28,14 @@ else
 endif
 
 test: all
-	for file in test_*.scm; do \
-		echo "Executant $$file..."; \
-		python3 Scheme.py $$file; \
+	for file in tests/test_*.scm; do \
+		if [ -f "$${file%.scm}.in" ]; then \
+			echo "Executant $$file amb entrada de $${file%.scm}.in..."; \
+			python3 Scheme.py $$file < $${file%.scm}.in; \
+		else \
+			echo "Executant $$file sense entrada redireccionada..."; \
+			python3 Scheme.py $$file; \
+		fi; \
 	done
 
 help:

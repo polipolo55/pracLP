@@ -1,0 +1,22 @@
+Prova de creació de llistes:
+
+Creant llista '(1 2 3): 
+[1, 2, 3]
+
+Prova de car amb llista '(1 2 3): 
+1
+
+Prova de cdr amb llista '(1 2 3): 
+[2, 3]
+
+Prova de cons: cons (1 2 3): 
+[1, 2, 3]
+
+Prova de null? amb '()': 
+True
+
+Prova de null? amb '(1 2 3)': 
+False
+
+Totes les proves de llistes han finalitzat!
+

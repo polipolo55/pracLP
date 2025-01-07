@@ -1,0 +1,12 @@
+Prova de funció d'ordre superior 'apply-twice' amb 'factorial':
+
+apply-twice factorial 3: 
+720
+
+Prova de passatge de funcions com a paràmetres:
+
+Cridant 'apply-twice' amb 'is-even?' i 4: 
+False
+
+Totes les proves de funcions d'ordre superior han finalitzat!
+

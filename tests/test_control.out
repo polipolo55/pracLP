@@ -1,0 +1,26 @@
+Prova de l'if:
+
+Si 5 és major que 3, retorna 'Sí', altrament 'No': 
+Sí
+
+Prova del cond:
+
+Condició: Si 2 és igual a 3, retorna 'Igual', si 2 és menor que 3, retorna 'Menor', altrament 'Diferent': 
+Menor
+
+Prova del let:
+
+Assignant x=10 i y=20, suma: 
+Definint LET x amb valor 10
+Definint LET y amb valor 20
+30
+
+Prova del let amb múltiples definicions:
+
+Assignant a=5, b=15 i suma: 
+Definint LET a amb valor 5
+Definint LET b amb valor 15
+20
+
+Totes les proves de control han finalitzat!
+
