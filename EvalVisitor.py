@@ -71,32 +71,32 @@ class EvalVisitor(SchemeVisitor):
     def define_function(self, func_node, body_node):
         func_parts = list(func_node.getChildren())
         if len(func_parts) < 2:
-            raise Exception("Definició de funció no vàlida: paràmetres")
+            raise Exception("Definicio de funcio no valida: parametres")
 
         _, nom, *params, _ = func_parts
         self.environment[nom.getText()] = ([param.getText() for param in params], body_node)
-        return f"Funció {nom.getText()} definida."
+        return f"Funcio {nom.getText()} definida."
 
     def handle_operation(self, operador, expressions):
         op = self.visit(operador)
         if len(expressions) != 2:
-            raise Exception("Operació no vàlida")
+            raise Exception("Operacio no valida")
         return op(self.visit(expressions[0]), self.visit(expressions[1]))
     
 
 
     def call_function(self, funcio, expressions):
         if funcio not in self.environment:
-            raise Exception(f"La funció {funcio} no està definida")
+            raise Exception(f"Funcio {funcio} no definida")
         
         func = self.environment[funcio]
 
         if not isinstance(func, tuple):
-            raise Exception(f"{funcio} no és una funció")
+            raise Exception(f"{funcio} no es una funcio")
         
         params, cos = func
         if len(params) != len(expressions):
-            raise Exception(f"La funció {funcio} requereix {len(params)} paràmetres, però n'ha rebut {len(expressions)}")
+            raise Exception(f"La funcio {funcio} requereix {len(params)} parametres, pero n'ha rebut {len(expressions)}")
         
         temp_env = self.environment.copy()
 

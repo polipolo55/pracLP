@@ -4,10 +4,6 @@
       1
       (* base (power base (- exponent 1)))))
 
-(define (concat-strings s1 s2)
-  ;; Combina dos valors de cadena
-  (string-append s1 s2))
-
 (define (apply-twice f val)
   ;; Exemple de funció d'ordre superior
   (f (f val)))
@@ -32,10 +28,6 @@
 (define (main)
   (display "Prova de la potència: 2^5 = ")
   (display (power 2 5))
-  (newline)
-
-  (display "Prova de 'concat-strings': ")
-  (display (concat-strings "Hello, " "world!"))
   (newline)
 
   (display "Prova de la funció d'ordre superior 'apply-twice' (factorial 3 dues vegades): ")
