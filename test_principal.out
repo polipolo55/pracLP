@@ -1,0 +1,98 @@
+Hola món, sóc el main
+
+hola
+
+Suma de 2 i 3: 
+5
+
+Comparació de 5 > 3: 
+True
+
+Prova de la definició de funció 'suma':
+
+7
+
+Prova de la definició de funció 'saluda':
+
+Hola
+
+
+Prova de la definició de la variable 'cinc':
+
+8
+
+Prova de l'if amb condició (< 3 2):
+
+tres no és menor que dos
+
+Prova del cond amb diverses condicions:
+
+menor
+
+Prova de les llistes 'llista' i 'llista2':
+
+[1, 2, 3, 4, 5]
+
+[12, 10, 3]
+
+Car de 'llista': 
+1
+
+Cdr de 'llista': 
+[2, 3, 4, 5]
+
+Cons de 0 a 'llista': 
+[0, 1, 2, 3, 4, 5]
+
+Null? de '()': 
+True
+
+Null? de 'llista': 
+False
+
+Prova de la recursivitat amb 'suma-llista' a 'llista2':
+
+25
+
+Prova del let amb variables x=10 i y=20:
+
+Definint LET x amb valor 10
+Definint LET y amb valor 20
+30
+
+Prova del read per introduir dos valors i sumar-los:
+
+Has introduït: 
+1
+
+Prova del let amb funció 'sumar-dos-valors':
+
+Introdueix dos valors: 
+Definint LET val1 amb valor 2
+Definint LET val2 amb valor 3
+La suma és: 
+5
+
+
+Proves lògiques amb and, or, not:
+
+and (> 3 2) (< 5 10) = 
+True
+
+or (> 3 2) (< 1 0) = 
+True
+
+not (> 3 2) = 
+False
+
+Prova addicional de funcions personalitzades:
+
+suma-llista de '(10 20 30) = 
+60
+
+Prova de múltiples operacions combinades:
+
+10
+
+Totes les proves principals han finalitzat correctament!
+

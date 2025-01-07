@@ -1,0 +1,41 @@
+Prova de sumes: 3 + 5 = 
+8
+
+Prova de restes: 10 - 7 = 
+3
+
+Prova de productes: 4 * 6 = 
+24
+
+Prova de divisions: 20 / 4 = 
+5.0
+
+Prova de comparacions: (>= 5 3) = 
+True
+
+Prova de comparacions: (<= 2 5) = 
+True
+
+Prova de comparacions: (= 10 10) = 
+True
+
+Prova de comparacions: (< 5 4) = 
+False
+
+Prova de comparacions: (> 5 4) = 
+True
+
+Prova de comparacions: (<> 5 4) = 
+True
+
+Prova de lògiques: (and (> 3 2) (< 5 10)) = 
+True
+
+Prova de lògiques: (or (> 3 2) (< 1 0)) = 
+True
+
+Prova de lògiques: (not (> 3 2)) = 
+False
+
+Totes les proves d'operadors han finalitzat!
+
