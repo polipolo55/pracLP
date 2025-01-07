@@ -10,7 +10,7 @@ from EvalVisitor import     EvalVisitor
 def main():
 
     if len(sys.argv) != 2:
-        print("Usage: python3 Scheme.py filename")
+        print("Ús: python3 Scheme.py fitxer")
         sys.exit(1)
     input_file = sys.argv[1]
     if not os.path.exists(input_file):
