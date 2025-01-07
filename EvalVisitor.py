@@ -33,10 +33,10 @@ class EvalVisitor(SchemeVisitor):
 
     def visitProgram(self, ctx):
         if self.debug:
-            print("Entering visitProgram")
+            print("Entrant a visitProgram")
         for expr in ctx.expression():
             if self.debug:
-                print(f"Processing expression: {expr.getText()}")
+                print(f"Processant expressió: {expr.getText()}")
             if not isinstance(expr, SchemeParser.CallsContext):
                 raise Exception(
                     "Només es poden fer definicions globals fora del main.")
@@ -49,7 +49,7 @@ class EvalVisitor(SchemeVisitor):
         if 'main' not in self.environment:
             raise Exception("Funció main no definida.")
         if self.debug:
-            print("Calling 'main' function")
+            print("Cridant la funció 'main'")
         return self.call_function('main', [])
 
     # Visita una operació aritmètica
@@ -78,7 +78,7 @@ class EvalVisitor(SchemeVisitor):
         text = ctx.getText()
         value = self.environment.get(text, f"Undefined variable: {text}")
         if self.debug:
-            print(f"Visited identifier '{text}' with value: {value}")
+            print(f"Visitat identificador '{text}' amb valor: {value}")
         return value
 
     # Visita una cadena de text
@@ -86,7 +86,7 @@ class EvalVisitor(SchemeVisitor):
     def visitStr(self, ctx):
         text = ctx.getText().strip('"')
         if self.debug:
-            print(f"Visited string: {text}")
+            print(f"Visitat cadena de text: {text}")
         return text
 
     # Visita el valor booleà True
@@ -109,7 +109,7 @@ class EvalVisitor(SchemeVisitor):
         nom = var_node.getText()
         valor = self.visit(value_node)
         if self.debug:
-            print(f"Defining variable '{nom}' with value: {valor}")
+            print(f"Definint variable '{nom}' amb valor: {valor}")
         self.environment[nom] = valor
         return f"Variable {nom} definida amb valor {valor}"
 
@@ -176,10 +176,10 @@ class EvalVisitor(SchemeVisitor):
 
     def handle_if_clause(self, cond_expr, true_expr, false_expr):
         if self.debug:
-            print("Handling 'if' clause")
-            print(f"Condition: {cond_expr.getText()}")
-            print(f"True expression: {true_expr.getText()}")
-            print(f"False expression: {false_expr.getText()}")
+            print("Gestionant la clàusula 'if'")
+            print(f"Condició: {cond_expr.getText()}")
+            print(f"Expressió veritable: {true_expr.getText()}")
+            print(f"Expressió falsa: {false_expr.getText()}")
         condition_result = self.visit(cond_expr)
         return self.visit(true_expr) if condition_result else self.visit(false_expr)
 
@@ -218,7 +218,7 @@ class EvalVisitor(SchemeVisitor):
 
     def handle_cond_clause(self, clauses):
         if self.debug:
-            print("Handling 'cond' clause with clauses:", clauses)
+            print("Gestionant la clàusula 'cond' amb clàusules:", clauses)
         for clause in clauses:
             children = list(clause.getChildren())
             if len(children) >= 2:
@@ -233,7 +233,7 @@ class EvalVisitor(SchemeVisitor):
 
     def handle_let_clause(self, bindings, expressions):
         if self.debug:
-            print("Handling 'let' clause with bindings:", bindings)
+            print("Gestionant la clàusula 'let' amb bindings:", bindings)
         if not isinstance(bindings, list):
             raise Exception("Let requereix una llista de definicions")
         local_env = self.environment.copy()
@@ -263,16 +263,14 @@ class EvalVisitor(SchemeVisitor):
 
     def visitCalls(self, ctx):
         if self.debug:
-            print("Entering visitCalls")
+            print("Entrant a visitCalls")
         children = list(ctx.getChildren())
         _, operador, *expressions, _ = children
         operador_text = operador.getText()
         if self.debug:
-            print(
-                f"Operator: {operador_text}, Expressions: {[expr.getText() for expr in expressions]}")
-
+            print(f"Operador: {operador_text}, Expressions: {[expr.getText() for expr in expressions]}")
         if (self.debug):
-            print("call amb operador", operador_text)
+            print("crida amb operador", operador_text)
 
         if operador_text == 'define':
             if len(expressions) < 1:

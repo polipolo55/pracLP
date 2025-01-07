@@ -1,0 +1,250 @@
+antlr4 -Dlanguage=Python3 -no-listener -visitor Scheme.g4
+for file in tests/test_*.scm; do \
+	if [ -f "${file%.scm}.in" ]; then \
+		echo "Executant $file amb entrada de ${file%.scm}.in..."; \
+		python3 Scheme.py $file < ${file%.scm}.in; \
+	else \
+		echo "Executant $file sense entrada redireccionada..."; \
+		python3 Scheme.py $file; \
+	fi; \
+done
+Executant tests/test_control.scm sense entrada redireccionada...
+Prova de l'if:
+
+Si 5 és major que 3, retorna 'Sí', altrament 'No': 
+Sí
+
+Prova del cond:
+
+Condició: Si 2 és igual a 3, retorna 'Igual', si 2 és menor que 3, retorna 'Menor', altrament 'Diferent': 
+Menor
+
+Prova del let:
+
+Assignant x=10 i y=20, suma: 
+Definint LET x amb valor 10
+Definint LET y amb valor 20
+30
+
+Prova del let amb múltiples definicions:
+
+Assignant a=5, b=15 i suma: 
+Definint LET a amb valor 5
+Definint LET b amb valor 15
+20
+
+Totes les proves de control han finalitzat!
+
+Executant tests/test_functions.scm sense entrada redireccionada...
+Prova de la potència: 2^5 = 
+32
+
+Prova de la funció d'ordre superior 'apply-twice' (factorial 3 dues vegades): 
+720
+
+Prova de 'is-even?' amb 10: 
+True
+
+Prova de 'factorial' amb 5: 
+120
+
+Prova de 'fibonacci' amb 8: 
+21
+
+Proves de funcions finalitzades!
+
+Executant tests/test_higher_order.scm sense entrada redireccionada...
+Prova de funció d'ordre superior 'apply-twice' amb 'factorial':
+
+apply-twice factorial 3: 
+720
+
+Prova de passatge de funcions com a paràmetres:
+
+Cridant 'apply-twice' amb 'is-even?' i 4: 
+False
+
+Totes les proves de funcions d'ordre superior han finalitzat!
+
+Executant tests/test_lists.scm sense entrada redireccionada...
+Prova de creació de llistes:
+
+Creant llista '(1 2 3): 
+[1, 2, 3]
+
+Prova de car amb llista '(1 2 3): 
+1
+
+Prova de cdr amb llista '(1 2 3): 
+[2, 3]
+
+Prova de cons: cons (1 2 3): 
+[1, 2, 3]
+
+Prova de null? amb '()': 
+True
+
+Prova de null? amb '(1 2 3)': 
+False
+
+Totes les proves de llistes han finalitzat!
+
+Executant tests/test_operators.scm sense entrada redireccionada...
+Prova de sumes: 3 + 5 = 
+8
+
+Prova de restes: 10 - 7 = 
+3
+
+Prova de productes: 4 * 6 = 
+24
+
+Prova de divisions: 20 / 4 = 
+5.0
+
+Prova de comparacions: (>= 5 3) = 
+True
+
+Prova de comparacions: (<= 2 5) = 
+True
+
+Prova de comparacions: (= 10 10) = 
+True
+
+Prova de comparacions: (< 5 4) = 
+False
+
+Prova de comparacions: (> 5 4) = 
+True
+
+Prova de comparacions: (<> 5 4) = 
+True
+
+Prova de lògiques: (and (> 3 2) (< 5 10)) = 
+True
+
+Prova de lògiques: (or (> 3 2) (< 1 0)) = 
+True
+
+Prova de lògiques: (not (> 3 2)) = 
+False
+
+Totes les proves d'operadors han finalitzat!
+
+Executant tests/test_principal.scm amb entrada de tests/test_principal.in...
+Hola món, sóc el main
+
+hola
+
+Suma de 2 i 3: 
+5
+
+Comparació de 5 > 3: 
+True
+
+Prova de la definició de funció 'suma':
+
+7
+
+Prova de la definició de funció 'saluda':
+
+Hola
+
+
+Prova de la definició de la variable 'cinc':
+
+8
+
+Prova de l'if amb condició (< 3 2):
+
+tres no és menor que dos
+
+Prova del cond amb diverses condicions:
+
+menor
+
+Prova de les llistes 'llista' i 'llista2':
+
+[1, 2, 3, 4, 5]
+
+[12, 10, 3]
+
+Car de 'llista': 
+1
+
+Cdr de 'llista': 
+[2, 3, 4, 5]
+
+Cons de 0 a 'llista': 
+[0, 1, 2, 3, 4, 5]
+
+Null? de '()': 
+True
+
+Null? de 'llista': 
+False
+
+Prova de la recursivitat amb 'suma-llista' a 'llista2':
+
+25
+
+Prova del let amb variables x=10 i y=20:
+
+Definint LET x amb valor 10
+Definint LET y amb valor 20
+30
+
+Prova del read per introduir dos valors i sumar-los:
+
+Has introduït: 
+1
+
+Prova del let amb funció 'sumar-dos-valors':
+
+Introdueix dos valors: 
+Definint LET val1 amb valor 2
+Definint LET val2 amb valor 3
+La suma és: 
+5
+
+
+Proves lògiques amb and, or, not:
+
+and (> 3 2) (< 5 10) = 
+True
+
+or (> 3 2) (< 1 0) = 
+True
+
+not (> 3 2) = 
+False
+
+Prova addicional de funcions personalitzades:
+
+suma-llista de '(10 20 30) = 
+60
+
+Prova de múltiples operacions combinades:
+
+10
+
+Totes les proves principals han finalitzat correctament!
+
+Executant tests/test_recursion.scm sense entrada redireccionada...
+Prova de recursivitat amb factorial:
+
+Factorial de 5: 
+120
+
+Prova de recursivitat amb fibonacci:
+
+Fibonacci de 6: 
+8
+
+Prova de recursivitat amb suma-llista:
+
+Suma de '(1 2 3 4 5): 
+15
+
+Totes les proves de recursivitat han finalitzat!
+
