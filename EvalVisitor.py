@@ -1,4 +1,5 @@
 from SchemeVisitor import SchemeVisitor
+from SchemeParser import SchemeParser
 
 class EvalVisitor(SchemeVisitor):
     def __init__(self):
@@ -24,12 +25,17 @@ class EvalVisitor(SchemeVisitor):
         }
 
     def visitProgram(self, ctx):
-        results = []
         for expr in ctx.expression():
-            result = self.visit(expr)
-            if result is not None:
-                results.append(result)
-        return results
+            if not isinstance(expr, SchemeParser.CallsContext):
+                raise Exception("Només es poden fer definicions globals fora del main.")
+            op = expr.getChild(1).getText()
+            if op != 'define':
+                raise Exception("Només es poden fer definicions globals fora del main.")
+            self.visit(expr)
+        
+        if 'main' not in self.environment:
+            raise Exception("Funció main no definida.")
+        return self.call_function('main', [])
 
     def visitArOperation(self, ctx):
         [operador] = list(ctx.getChildren())

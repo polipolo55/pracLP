@@ -1,0 +1,3 @@
+(define (main)
+  (display "Hola món soc el main")
+  (newline))
