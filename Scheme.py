@@ -4,8 +4,9 @@ import sys
 
 from SchemeLexer import SchemeLexer
 from SchemeParser import SchemeParser
-from SchemeVisitor import   SchemeVisitor
-from EvalVisitor import     EvalVisitor
+from SchemeVisitor import SchemeVisitor
+from EvalVisitor import EvalVisitor
+
 
 def main():
 
@@ -34,6 +35,7 @@ def main():
     except Exception as e:
         print(f"Error: {e}")
         sys.exit(1)
+
 
 if __name__ == '__main__':
     main()
